@@ -6,11 +6,18 @@ package library;
  */
 public class BookCopy {
 
-    // TODO: rep
+    // rep
+    private final Book book;
+    private Condition condition;
     
-    // TODO: rep invariant
-    // TODO: abstraction function
-    // TODO: safety from rep exposure argument
+    // rep invariant
+    // book is immutable
+    
+    // abstraction function
+    // Each book/condition pair gets mapped to a physical copy of a book
+    
+    // safety from rep exposure argument
+    // create a new Book object with the values of book
     
     public static enum Condition {
         GOOD, DAMAGED
@@ -21,7 +28,8 @@ public class BookCopy {
      * @param book the Book of which this is a copy
      */
     public BookCopy(Book book) {
-        throw new RuntimeException("not implemented yet");
+        this.book = book;
+        this.condition = Condition.GOOD;
     }
     
     // assert the rep invariant
@@ -33,14 +41,15 @@ public class BookCopy {
      * @return the Book of which this is a copy
      */
     public Book getBook() {
-        throw new RuntimeException("not implemented yet");
+        return new Book(book.getTitle(), book.getAuthors(), book.getYear());
     }
     
     /**
      * @return the condition of this book copy
      */
     public Condition getCondition() {
-        throw new RuntimeException("not implemented yet");
+        Condition returnCondition = condition;
+        return returnCondition;
     }
 
     /**
@@ -48,28 +57,41 @@ public class BookCopy {
      * @param condition the latest condition of the book copy
      */
     public void setCondition(Condition condition) {
-        throw new RuntimeException("not implemented yet");
+        this.condition = condition;
     }
     
-    /**
-     * @return human-readable representation of this book that includes book.toString()
-     *    and the words "good" or "damaged" depending on its condition
-     */
+    @Override
     public String toString() {
-        throw new RuntimeException("not implemented yet");
+        return "BookCopy [book=" + book + ", condition=" + condition + "]";
     }
 
-    // uncomment the following methods if you need to implement equals and hashCode,
-    // or delete them if you don't
-    // @Override
-    // public boolean equals(Object that) {
-    //     throw new RuntimeException("not implemented yet");
-    // }
-    // 
-    // @Override
-    // public int hashCode() {
-    //     throw new RuntimeException("not implemented yet");
-    // }
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        BookCopy other = (BookCopy) obj;
+        if (book == null) {
+            if (other.book != null)
+                return false;
+        } else if (!book.equals(other.book))
+            return false;
+        if (condition != other.condition)
+            return false;
+        return true;
+    }
+     
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((book == null) ? 0 : book.hashCode());
+        result = prime * result + ((condition == null) ? 0 : condition.hashCode());
+        return result;
+    }
 
 
     /* Copyright (c) 2016 MIT 6.005 course staff, all rights reserved.
