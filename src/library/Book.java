@@ -16,8 +16,11 @@ public class Book {
     private final List<String> authors;
     private final int year;
     
-    // Rep invariant
-    // Neither the title, list of authors nor year can be changed once assigned.
+    // Rep invariants
+    // Title of the book must contain at least one non-space character.
+    // Each book must contain at least one author.
+    // Each author's name must contain at least one non-space character.
+    // The year must be a year in the conventional calendar
     
     // Abstraction function
     // The title, list of authors and publication year map to an edition of a book, not the
@@ -38,12 +41,21 @@ public class Book {
      * @param year Year when this edition was published in the conventional (Common Era) calendar.  Must be nonnegative. 
      */
     public Book(String title, List<String> authors, int year) {
-        throw new RuntimeException("not implemented yet");
+        this.title = title;
+        this.authors = authors;
+        this.year = year;
+        
+        checkRep();
     }
     
     // assert the rep invariant
     private void checkRep() {
-        throw new RuntimeException("not implemented yet");
+        assert(title.trim().length() > 0);
+        assert(authors.size() > 0);
+        for (String author: authors) {
+            assert(author.trim().length() > 0);
+        }
+        assert(year > 0);
     }
     
     /**
@@ -77,15 +89,15 @@ public class Book {
 
     // uncomment the following methods if you need to implement equals and hashCode,
     // or delete them if you don't
-    // @Override
-    // public boolean equals(Object that) {
-    //     throw new RuntimeException("not implemented yet");
-    // }
-    // 
-    // @Override
-    // public int hashCode() {
-    //     throw new RuntimeException("not implemented yet");
-    // }
+    @Override
+    public boolean equals(Object that) {
+         throw new RuntimeException("not implemented yet");
+     }
+     
+     @Override
+     public int hashCode() {
+         throw new RuntimeException("not implemented yet");
+     }
 
 
 
