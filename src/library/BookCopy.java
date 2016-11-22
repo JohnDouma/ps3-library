@@ -12,12 +12,14 @@ public class BookCopy {
     
     // rep invariant
     // book is immutable
+    // condition is either GOOD or DAMAGED
     
     // abstraction function
     // Each book/condition pair gets mapped to a physical copy of a book
     
     // safety from rep exposure argument
-    // create a new Book object with the values of book
+    // create a new Book object with the values of book to prevent nullifying ours
+    // return a separate reference to condition to keep our copy from being modified
     
     public static enum Condition {
         GOOD, DAMAGED

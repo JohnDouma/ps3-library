@@ -9,14 +9,6 @@ import java.util.Arrays;
  * Test suite for BookCopy ADT.
  */
 public class BookCopyTest {
-
-    /*
-     * Testing strategy
-     * ==================
-     * 
-     * TODO: your testing strategy for this ADT should go here.
-     * Make sure you have partitions.
-     */
     
     // TODO: put JUnit @Test methods here that you developed from your testing strategy
     @Test
@@ -30,6 +22,14 @@ public class BookCopyTest {
     public void testAssertionsEnabled() {
         assert false; // make sure assertions are enabled with VM argument: -ea
     }
+    
+    /*
+     * Testing strategy
+     * ==================
+     * 
+     * TODO: your testing strategy for this ADT should go here.
+     * Make sure you have partitions.
+     */
 
 
     /* Copyright (c) 2016 MIT 6.005 course staff, all rights reserved.
