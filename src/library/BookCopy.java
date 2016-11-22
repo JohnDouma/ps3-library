@@ -68,7 +68,7 @@ public class BookCopy {
     
     @Override
     public String toString() {
-        return "BookCopy [book=" + book + ", condition=" + condition + "]";
+        return "BookCopy [book=" + book + ", condition=" + condition.name().toLowerCase() + "]";
     }
 
 
