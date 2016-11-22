@@ -65,34 +65,6 @@ public class BookCopy {
         return "BookCopy [book=" + book + ", condition=" + condition + "]";
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        BookCopy other = (BookCopy) obj;
-        if (book == null) {
-            if (other.book != null)
-                return false;
-        } else if (!book.equals(other.book))
-            return false;
-        if (condition != other.condition)
-            return false;
-        return true;
-    }
-     
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((book == null) ? 0 : book.hashCode());
-        result = prime * result + ((condition == null) ? 0 : condition.hashCode());
-        return result;
-    }
-
 
     /* Copyright (c) 2016 MIT 6.005 course staff, all rights reserved.
      * Redistribution of original or derived work requires explicit permission.
