@@ -32,11 +32,14 @@ public class BookCopy {
     public BookCopy(Book book) {
         this.book = book;
         this.condition = Condition.GOOD;
+        
+        checkRep();
     }
     
     // assert the rep invariant
     private void checkRep() {
-        throw new RuntimeException("not implemented yet");
+        assert(book != null);
+        assert(condition != null);
     }
     
     /**
@@ -60,6 +63,7 @@ public class BookCopy {
      */
     public void setCondition(Condition condition) {
         this.condition = condition;
+        checkRep();
     }
     
     @Override
