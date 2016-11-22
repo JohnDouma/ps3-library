@@ -13,14 +13,6 @@ import org.junit.Test;
  */
 public class BookTest {
 
-    /*
-     * Testing strategy
-     * ==================
-     * 
-     * TODO: your testing strategy for this ADT should go here.
-     * Make sure you have partitions.
-     */
-    
     // TODO: put JUnit @Test methods here that you developed from your testing strategy
     @Test
     public void testExampleTest() {
