@@ -79,25 +79,44 @@ public class Book {
         return year;
     }
 
-    /**
-     * @return human-readable representation of this book that includes its title,
-     *    authors, and publication year
-     */
+    @Override
     public String toString() {
-        throw new RuntimeException("not implemented yet");
+        return "Book [title=" + title + ", authors=" + authors + ", year=" + year + "]";
     }
 
-    // uncomment the following methods if you need to implement equals and hashCode,
-    // or delete them if you don't
     @Override
-    public boolean equals(Object that) {
-         throw new RuntimeException("not implemented yet");
-     }
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Book other = (Book) obj;
+        if (authors == null) {
+            if (other.authors != null)
+                return false;
+        } else if (!authors.equals(other.authors))
+            return false;
+        if (title == null) {
+            if (other.title != null)
+                return false;
+        } else if (!title.equals(other.title))
+            return false;
+        if (year != other.year)
+            return false;
+        return true;
+    }
      
-     @Override
-     public int hashCode() {
-         throw new RuntimeException("not implemented yet");
-     }
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((authors == null) ? 0 : authors.hashCode());
+        result = prime * result + ((title == null) ? 0 : title.hashCode());
+        result = prime * result + year;
+        return result;
+    }
 
 
 
