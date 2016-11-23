@@ -112,7 +112,15 @@ public class SmallLibrary implements Library {
     
     @Override
     public void lose(BookCopy copy) {
-        throw new RuntimeException("not implemented yet");
+        if (inLibrary.contains(copy)) {
+            inLibrary.remove(copy);
+        }
+        
+        if (checkedOut.contains(copy)) {
+            checkedOut.remove(copy);
+        }
+        
+        checkRep();
     }
 
     /* Copyright (c) 2016 MIT 6.005 course staff, all rights reserved.

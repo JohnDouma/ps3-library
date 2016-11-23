@@ -79,6 +79,7 @@ public class LibraryTest {
      * Test allAvailableCopies to with no available copies and some available copies
      * Test find with multiple copies of the same book
      * Test find with no books found - allow empty list as well as null list
+     * Test lose with books that are available and books that are checked out
      */
     
     @Test
@@ -105,7 +106,6 @@ public class LibraryTest {
     public void testAllCopiesMultipleCopies() {
         Library library = makeLibrary();
         Book book1 = new Book("title", Arrays.asList("author"), 2000);
-//        Book book2 = new Book("title", Arrays.asList("author"), 2000);
         Book book2 = new Book("TITLE", Arrays.asList("Fred Bloggs"), 1992);
         library.buy(book1);
         library.buy(book1);
@@ -114,6 +114,58 @@ public class LibraryTest {
         Set<BookCopy> copies = library.allCopies(book1);
         
         assertEquals(2, copies.size());
+    }
+    
+    @Test
+    public void testAvailableCopies() {
+        Library library = makeLibrary();
+        Book book1 = new Book("title", Arrays.asList("author"), 2000);
+        Book book2 = new Book("TITLE", Arrays.asList("Fred Bloggs"), 1992);
+        BookCopy copy1 = library.buy(book1);
+        BookCopy copy2 = library.buy(book1);
+        BookCopy copy3 = library.buy(book2);
+        
+        library.checkout(copy1);
+        
+        Set<BookCopy> copies = library.availableCopies(book1);
+        
+        assertEquals(1, copies.size());
+        
+        library.checkout(copy3);
+        
+        copies = library.availableCopies(book2);
+        
+        assertEquals(0, copies.size());
+        
+        library.checkin(copy1);
+        
+        copies = library.availableCopies(book1);
+        
+        assertEquals(2, copies.size());
+    }
+    
+    @Test
+    public void testLose() {
+        Library library = makeLibrary();
+        Book book1 = new Book("title", Arrays.asList("author"), 2000);
+        Book book2 = new Book("TITLE", Arrays.asList("Fred Bloggs"), 1992);
+        BookCopy copy1 = library.buy(book1);
+        BookCopy copy2 = library.buy(book1);
+        BookCopy copy3 = library.buy(book2);
+        
+        library.lose(copy1);
+        
+        Set<BookCopy> copies = library.allCopies(book1);
+        
+        assertEquals(1, copies.size());
+        
+        library.checkout(copy3);
+        
+        library.lose(copy3);
+        
+        copies = library.allCopies(book2);
+        
+        assertEquals(0, copies.size());
     }
     
     @Test
