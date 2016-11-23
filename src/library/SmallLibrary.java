@@ -1,5 +1,6 @@
 package library;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -29,42 +30,79 @@ public class SmallLibrary implements Library {
     // TODO: safety from rep exposure argument
     
     public SmallLibrary() {
-        throw new RuntimeException("not implemented yet");
+        inLibrary = new HashSet<BookCopy>();
+        checkedOut = new HashSet<BookCopy>();
+        
+        checkRep();
     }
     
     // assert the rep invariant
     private void checkRep() {
-        throw new RuntimeException("not implemented yet");
+        for (BookCopy copy: inLibrary) {
+            assert(!checkedOut.contains(copy));
+        }
     }
 
     @Override
     public BookCopy buy(Book book) {
-        throw new RuntimeException("not implemented yet");
+        BookCopy copy = new BookCopy(book);
+        inLibrary.add(copy);
+        checkRep();
+        
+        return copy;
     }
     
     @Override
     public void checkout(BookCopy copy) {
-        throw new RuntimeException("not implemented yet");
+        if (isAvailable(copy)) {
+            checkedOut.add(copy);
+            inLibrary.remove(copy);
+            checkRep();
+        }
     }
     
     @Override
     public void checkin(BookCopy copy) {
-        throw new RuntimeException("not implemented yet");
+        if (checkedOut.contains(copy)) {
+            inLibrary.add(copy);
+            checkedOut.remove(copy);
+            checkRep();
+        }
     }
     
     @Override
     public boolean isAvailable(BookCopy copy) {
-        throw new RuntimeException("not implemented yet");
+        return inLibrary.contains(copy);
     }
     
     @Override
     public Set<BookCopy> allCopies(Book book) {
-        throw new RuntimeException("not implemented yet");
+        Set<BookCopy> returnSet = new HashSet<BookCopy>();
+        for (BookCopy copy: checkedOut) {
+            if (copy.getBook().equals(book)) {
+                returnSet.add(copy);
+            }
+        }
+        
+        for (BookCopy copy: inLibrary) {
+            if (copy.getBook().equals(book)) {
+                returnSet.add(copy);
+            }
+        }
+        
+        return returnSet;
     }
     
     @Override
     public Set<BookCopy> availableCopies(Book book) {
-        throw new RuntimeException("not implemented yet");
+        Set<BookCopy> returnSet = new HashSet<BookCopy>();
+        for (BookCopy copy: inLibrary) {
+            if (copy.getBook().equals(book)) {
+                returnSet.add(copy);
+            }
+        }
+        
+        return returnSet;
     }
 
     @Override
@@ -76,19 +114,6 @@ public class SmallLibrary implements Library {
     public void lose(BookCopy copy) {
         throw new RuntimeException("not implemented yet");
     }
-
-    // uncomment the following methods if you need to implement equals and hashCode,
-    // or delete them if you don't
-    // @Override
-    // public boolean equals(Object that) {
-    //     throw new RuntimeException("not implemented yet");
-    // }
-    // 
-    // @Override
-    // public int hashCode() {
-    //     throw new RuntimeException("not implemented yet");
-    // }
-    
 
     /* Copyright (c) 2016 MIT 6.005 course staff, all rights reserved.
      * Redistribution of original or derived work requires explicit permission.

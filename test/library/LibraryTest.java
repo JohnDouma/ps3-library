@@ -1,15 +1,20 @@
 package library;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Set;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
+
+import library.BookCopy.Condition;
 
 /**
  * Test suite for Library ADT.
@@ -65,12 +70,52 @@ public class LibraryTest {
     /*
      * Testing strategy
      * ==================
-     * 
-     * TODO: your testing strategy for this ADT should go here.
-     * Make sure you have partitions.
+     *
+     * Test buyBook; make sure the condition is Condition.GOOD
+     * Test checkout to make sure copy is no longer available
+     * Test isAvailable to make sure copy is available after purchase and unavailable after checkout
+     * Test allCopies with no copies in the library
+     * Test allCopies with both checked-out and available copies
+     * Test allAvailableCopies to with no available copies and some available copies
+     * Test find with multiple copies of the same book
+     * Test find with no books found - allow empty list as well as null list
      */
     
-    // TODO: put JUnit @Test methods here that you developed from your testing strategy
+    @Test
+    public void testBuyBook() {
+        Book book = new Book("title", Arrays.asList("author"), 2000);
+        Library library = makeLibrary();
+        BookCopy copy = library.buy(book);
+        assertTrue(library.isAvailable(copy));
+        assertEquals(Condition.GOOD, copy.getCondition());
+        library.checkout(copy);
+        assertFalse(library.isAvailable(copy));
+    }
+    
+    @Test
+    public void testAllCopiesEmptyLibrary() {
+        Library library = makeLibrary();
+        Book book = new Book("title", Arrays.asList("author"), 2000);
+        Set<BookCopy> copies = library.allCopies(book);
+        
+        assertTrue(copies == null || copies.size() == 0);
+    }
+    
+    @Test
+    public void testAllCopiesMultipleCopies() {
+        Library library = makeLibrary();
+        Book book1 = new Book("title", Arrays.asList("author"), 2000);
+//        Book book2 = new Book("title", Arrays.asList("author"), 2000);
+        Book book2 = new Book("TITLE", Arrays.asList("Fred Bloggs"), 1992);
+        library.buy(book1);
+        library.buy(book1);
+        library.buy(book2);
+        
+        Set<BookCopy> copies = library.allCopies(book1);
+        
+        assertEquals(2, copies.size());
+    }
+    
     @Test
     public void testExampleTest() {
         Library library = makeLibrary();
