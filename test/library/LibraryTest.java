@@ -151,9 +151,9 @@ public class LibraryTest {
         Library library = makeLibrary();
         Book book1 = new Book("title", Arrays.asList("author"), 2000);
         Book book2 = new Book("TITLE", Arrays.asList("Fred Bloggs"), 1992);
-        BookCopy copy1 = library.buy(book1);
-        BookCopy copy2 = library.buy(book1);
-        BookCopy copy3 = library.buy(book2);
+        library.buy(book1);
+        library.buy(book1);
+        library.buy(book2);
         
         List<Book> books = library.find(book1.getTitle());
         
@@ -162,6 +162,35 @@ public class LibraryTest {
         books = library.find(book2.getAuthors().get(0));
         
         assertEquals(1, books.size());
+    }
+    
+    @Test
+    public void testFindNoResultsFound() {
+        Library library = makeLibrary();
+        Book book1 = new Book("title", Arrays.asList("author"), 2000);
+        Book book2 = new Book("TITLE", Arrays.asList("Fred Bloggs"), 1992);
+        library.buy(book1);
+        library.buy(book2);
+        
+        List<Book> books = library.find("Mathematics");
+        
+        assertTrue(books == null || books.size() == 0);
+    }
+    
+    @Test
+    public void testFindSameBookWithDifferentPublicationYears() {
+        Library library = makeLibrary();
+        Book book1 = new Book("title", Arrays.asList("author"), 2000);
+        Book book2 = new Book("title", Arrays.asList("author"), 2001);
+        library.buy(book2);
+        library.buy(book1);
+        
+        List<Book> books = library.find("author");
+        
+        assertEquals(2, books.size());
+        
+        Book book = books.get(0);
+        assertEquals(book1, book);
     }
     
     @Test

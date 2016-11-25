@@ -127,12 +127,12 @@ public class SmallLibrary implements Library {
         for (Book book: allBooks) {
             authors = book.getAuthors();
             title = book.getTitle();
-            if (title.contains(query)) {
+            if (title.contains(query) || query.contains(title)) {
                 addBookSortedByDate(book, books);
                 continue;
             }
             for (String author: authors) {
-                if (author.contains(query)) {
+                if (author.contains(query) || query.contains(author)) {
                     addBookSortedByDate(book, books);
                     break;
                 }
