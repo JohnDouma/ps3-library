@@ -1,5 +1,6 @@
 package library;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -107,7 +108,38 @@ public class SmallLibrary implements Library {
 
     @Override
     public List<Book> find(String query) {
-        throw new RuntimeException("not implemented yet");
+        List<Book> books = new ArrayList<Book>();
+        if (query.trim().length() == 0) {
+            return books;
+        }
+        
+        Set<BookCopy> allCopies = new HashSet<BookCopy>();
+        allCopies.addAll(checkedOut);
+        allCopies.addAll(inLibrary);
+        
+        Set<Book> allBooks = new HashSet<Book>();
+        for (BookCopy copy: allCopies) {
+            allBooks.add(copy.getBook());
+        }
+        
+        List<String> authors;
+        String title;
+        for (Book book: allBooks) {
+            authors = book.getAuthors();
+            title = book.getTitle();
+            if (title.contains(query)) {
+                addBookSortedByDate(book, books);
+                continue;
+            }
+            for (String author: authors) {
+                if (author.contains(query)) {
+                    addBookSortedByDate(book, books);
+                    break;
+                }
+            }
+        }
+        
+        return books;
     }
     
     @Override
@@ -121,6 +153,30 @@ public class SmallLibrary implements Library {
         }
         
         checkRep();
+    }
+    
+    /*
+     * Add book to books.
+     * If another book is in books with the same title and author list, make sure the book
+     * with the newest publication date appears first.
+     */
+    private void addBookSortedByDate(final Book book, List<Book> books) {
+        int length = books.size();
+        int index = 0;
+        Book tempBook;
+        for (int i = 0; i < length; i++) {
+            tempBook = books.get(i);
+            if (tempBook.getTitle().equals(book.getTitle()) && tempBook.getAuthors().equals(book.getAuthors())) {
+                if (book.getYear() < tempBook.getYear()) {
+                    index = i;
+                } else {
+                    index = i + 1;
+                }
+                break;
+            }
+        }
+        
+        books.add(index, book);
     }
 
     /* Copyright (c) 2016 MIT 6.005 course staff, all rights reserved.

@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.Test;
@@ -79,6 +80,7 @@ public class LibraryTest {
      * Test allAvailableCopies to with no available copies and some available copies
      * Test find with multiple copies of the same book
      * Test find with no books found - allow empty list as well as null list
+     * Test find with books that have same title and author but different publication dates
      * Test lose with books that are available and books that are checked out
      */
     
@@ -142,6 +144,24 @@ public class LibraryTest {
         copies = library.availableCopies(book1);
         
         assertEquals(2, copies.size());
+    }
+    
+    @Test
+    public void testFindMultipleCopiesOfSameBook() {
+        Library library = makeLibrary();
+        Book book1 = new Book("title", Arrays.asList("author"), 2000);
+        Book book2 = new Book("TITLE", Arrays.asList("Fred Bloggs"), 1992);
+        BookCopy copy1 = library.buy(book1);
+        BookCopy copy2 = library.buy(book1);
+        BookCopy copy3 = library.buy(book2);
+        
+        List<Book> books = library.find(book1.getTitle());
+        
+        assertEquals(1, books.size());
+        
+        books = library.find(book2.getAuthors().get(0));
+        
+        assertEquals(1, books.size());
     }
     
     @Test
