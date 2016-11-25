@@ -166,14 +166,11 @@ public class SmallLibrary implements Library {
         Book tempBook;
         for (int i = 0; i < length; i++) {
             tempBook = books.get(i);
-            if (tempBook.getTitle().equals(book.getTitle()) && tempBook.getAuthors().equals(book.getAuthors())) {
-                if (book.getYear() < tempBook.getYear()) {
-                    index = i;
-                } else {
-                    index = i + 1;
-                }
+            if (tempBook.getTitle().equals(book.getTitle()) && tempBook.getAuthors().equals(book.getAuthors()) && book.getYear() > tempBook.getYear()) {
                 break;
             }
+            
+            index++;
         }
         
         books.add(index, book);

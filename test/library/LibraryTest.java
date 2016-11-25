@@ -190,7 +190,7 @@ public class LibraryTest {
         assertEquals(2, books.size());
         
         Book book = books.get(0);
-        assertEquals(book1, book);
+        assertEquals(book2, book);
     }
     
     @Test
