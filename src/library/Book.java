@@ -1,5 +1,6 @@
 package library;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class Book {
      */
     public Book(String title, List<String> authors, int year) {
         this.title = title;
-        this.authors = authors;
+        this.authors = new ArrayList<String>(authors);
         this.year = year;
         
         checkRep();
